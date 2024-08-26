@@ -42,8 +42,8 @@ waypoints <- rbind(
   gpx_df %>% filter(horizontal_distance > 0 & horizontal_distance < 5) %>% arrange(-elevation) %>% head(1) %>% mutate(name = 'NW Passage', type = 'peak'),
   gpx_df %>% filter(horizontal_distance > 2 & horizontal_distance < 5) %>% arrange(elevation) %>% head(1) %>% mutate(name = 'Roundhouse Aid Station', type = 'base'),
   gpx_df %>% filter(horizontal_distance > 10 & horizontal_distance < 15) %>% arrange(-elevation) %>% head(1) %>% mutate(name = 'Roundhouse Aid Station', type = 'peak'),
-  gpx_df %>% filter(horizontal_distance > 15 & horizontal_distance < 20) %>% arrange(elevation) %>% head(1) %>% mutate(name = 'Piccolo Summit', type = 'base'),
-  gpx_df %>% filter(horizontal_distance > 15 & horizontal_distance < 20) %>% arrange(-elevation) %>% head(1) %>% mutate(name = 'Piccolo Summit', type = 'peak'),
+  gpx_df %>% filter(horizontal_distance > 15 & horizontal_distance < 20) %>% arrange(elevation) %>% head(1) %>% mutate(name = 'Little Whistler', type = 'base'),
+  gpx_df %>% filter(horizontal_distance > 15 & horizontal_distance < 20) %>% arrange(-elevation) %>% head(1) %>% mutate(name = 'Little Whistler', type = 'peak'),
   gpx_df %>% filter(horizontal_distance > 20 & horizontal_distance < 25) %>% arrange(elevation) %>% head(1) %>% mutate(name = 'Whistler Summit', type = 'base'),
   gpx_df %>% filter(horizontal_distance > 25 & horizontal_distance < 30) %>% arrange(-elevation) %>% head(1) %>% mutate(name = 'Whistler Summit', type = 'peak')
 ) %>% select(-grade)
