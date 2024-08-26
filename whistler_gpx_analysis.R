@@ -4,7 +4,7 @@ library(plotly)
 options(scipen = 999)
 source('./helper.R')
 
-gpx_df <- data.table::fread('~/whistler_gpx_analysis/whistler_elevation_data.csv') %>% 
+gpx_df <- data.table::fread('~/whistler_gpx_analysis/whistler_elevation_data_official.csv') %>% 
   rename(elevation_raw = elevation) %>%
   mutate(elevation_raw = elevation_raw * 3.281) # m to ft
 
@@ -38,16 +38,18 @@ for (i in 2:(nrow(gpx_df)-1)){
 }
 
 waypoints <- rbind(
-  gpx_df %>% filter(horizontal_distance > 5 & horizontal_distance < 10) %>% arrange(elevation) %>% head(1) %>% mutate(name = 'Blackcomb Rendezvous', type = 'base'),
-  gpx_df %>% filter(horizontal_distance > 10 & horizontal_distance < 15) %>% arrange(-elevation) %>% head(1) %>% mutate(name = 'Blackcomb Rendezvous', type = 'peak'),
-  gpx_df %>% filter(horizontal_distance > 18 & horizontal_distance < 23) %>% arrange(elevation) %>% head(1) %>% mutate(name = 'Piccolo Summit', type = 'base'),
-  gpx_df %>% filter(horizontal_distance > 32 & horizontal_distance < 34) %>% arrange(-elevation) %>% head(1) %>% mutate(name = 'Piccolo Summit', type = 'peak'),
-  gpx_df %>% filter(horizontal_distance > 18 & horizontal_distance < 23) %>% arrange(elevation) %>% head(1) %>% mutate(name = 'Whistler Summit', type = 'base'),
-  gpx_df %>% filter(horizontal_distance > 35 & horizontal_distance < 40) %>% arrange(-elevation) %>% head(1) %>% mutate(name = 'Whistler Summit', type = 'peak')
+  gpx_df %>% filter(horizontal_distance < 2) %>% arrange(elevation) %>% head(1) %>% mutate(name = 'NW Passage', type = 'base'),
+  gpx_df %>% filter(horizontal_distance > 0 & horizontal_distance < 5) %>% arrange(-elevation) %>% head(1) %>% mutate(name = 'NW Passage', type = 'peak'),
+  gpx_df %>% filter(horizontal_distance > 2 & horizontal_distance < 5) %>% arrange(elevation) %>% head(1) %>% mutate(name = 'Roundhouse Aid Station', type = 'base'),
+  gpx_df %>% filter(horizontal_distance > 10 & horizontal_distance < 15) %>% arrange(-elevation) %>% head(1) %>% mutate(name = 'Roundhouse Aid Station', type = 'peak'),
+  gpx_df %>% filter(horizontal_distance > 15 & horizontal_distance < 20) %>% arrange(elevation) %>% head(1) %>% mutate(name = 'Piccolo Summit', type = 'base'),
+  gpx_df %>% filter(horizontal_distance > 15 & horizontal_distance < 20) %>% arrange(-elevation) %>% head(1) %>% mutate(name = 'Piccolo Summit', type = 'peak'),
+  gpx_df %>% filter(horizontal_distance > 20 & horizontal_distance < 25) %>% arrange(elevation) %>% head(1) %>% mutate(name = 'Whistler Summit', type = 'base'),
+  gpx_df %>% filter(horizontal_distance > 25 & horizontal_distance < 30) %>% arrange(-elevation) %>% head(1) %>% mutate(name = 'Whistler Summit', type = 'peak')
 ) %>% select(-grade)
 
-climbs <- waypoints %>% 
-  group_by(name) %>% 
+climbs <- waypoints %>%
+  group_by(name) %>%
   summarise(avg_grade = 100*(max(elevation) - min(elevation)) / (3280.84*(max(horizontal_distance) - min(horizontal_distance))),
             horizontal_distance_start = min(horizontal_distance),
             horizontal_distance_end = max(horizontal_distance),
@@ -82,7 +84,7 @@ p <- p +
                 label = name), 
             color = "darkblue", size = 3.5, inherit.aes = FALSE)
 
-ggsave('~/whistler_gpx_analysis/grade_map.png', width = 20, height = 6)
+ggsave('~/whistler_gpx_analysis/grade_map_official.png', width = 20, height = 6)
 
 
 ### Total elevation gain
